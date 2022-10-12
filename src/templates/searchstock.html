@@ -1,0 +1,267 @@
+<!DOCTYPE HTML>
+<html>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<head>
+  <html lang="en">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+      <nav class="w3-bar w3-border w3-green">
+        <a href="/" class="w3-bar-item w3-button">Home</a>
+        <a href="/profile" class="w3-bar-item w3-button">Profile</a>
+        {% if user.is_authenticated %}
+          <a href="logout" class="w3-bar-item w3-button w3-red w3-right">Logout</a>
+          <span class="w3-bar-item w3-right">Welcome, {{user.username}}</span>
+        {% else %}
+          <a href="login" class="w3-bar-item w3-button w3-red w3-right">Sign in</a>
+          <span class="w3-bar-item w3-right">Welcome, guest_user</span>
+        {% endif %}
+      </nav>
+        
+</head>
+<script type="text/javascript">
+</script>
+<body>
+    <link rel="stylesheet" href="./../static/searchstock.css">
+    <div align="center">
+      {{error}}
+    </div>
+    <div class="center">
+      <h1>Enter the stock you want to buy/sell or Add to Watchlist</h1>
+    </div>
+    <div class="center2">
+      <div class="form">
+        <form action="/searchStockes", method="post">
+          <input type="text" placeholder="Search stock" name="search" required>
+          <a><button class="submit" type="submit" >BUY/SELL</button></a>
+          <a><button class="submit" type="submit" formaction="add_to_watch_list">Add to Watchlist</button></a>
+        </form>
+          <!-- <a href="/add_to_watch_list" method="post"><button class="submit" type="submit">Add to Watchlist</button></a>                   -->
+        <!-- </span> -->
+      </div>
+    </div>     
+    
+    <div class="row">
+      <div class="column">
+          <table>        
+              <tr>
+              <td class="sno">1</td>
+              <td class="stock">'adaniports'</td>
+              </tr>
+              <tr>
+              <td class="sno">2</td>
+              <td class="stock">'asianpaint'</td>
+              </tr>
+              <tr>
+              <td class="sno">3</td>
+              <td class="stock">'axisbank'</td>
+              </tr>
+              <tr>
+              <td class="sno">4</td>
+              <td class="stock">'bajajfinsv'</td>
+              </tr>
+              <tr>
+              <td class="sno">5</td>
+              <td class="stock">'bajaj_auto'</td>
+              </tr>
+              <tr>
+              <td class="sno">6</td>
+              <td class="stock">'bajfinance'</td>
+              </tr>
+              <tr>
+              <td class="sno">7</td>
+              <td class="stock">'bhartiartl'</td>
+              </tr>
+              <tr>
+              <td class="sno">8</td>
+              <td class="stock">'bpcl'</td>
+              </tr>
+              <tr>
+              <td class="sno">9</td>
+              <td class="stock">'britannia'</td>
+              </tr>
+              <tr>
+              <td class="sno">10</td>
+              <td class="stock">'cipla'</td>
+              </tr>
+          </table>
+      </div>
+      <div class="column">
+          <table>
+              <tr>
+              <td class="sno">11</td>
+              <td class="stock">'coalindia'</td>
+              </tr>
+              <tr>
+              <td class="sno">12</td>
+              <td class="stock">'drreddy'</td>
+              </tr>
+              <tr>
+              <td class="sno">13</td>
+              <td class="stock">'eichermot'</td>
+              </tr>
+              <tr>
+              <td class="sno">14</td>
+              <td class="stock">'gail'</td>
+              </tr>
+              <tr>
+              <td class="sno">15</td>
+              <td class="stock">'grasim'</td>
+              </tr>
+              <tr>
+              <td class="sno">16</td>
+              <td class="stock">'hcltech'</td>
+              </tr>
+              <tr>
+              <td class="sno">17</td>
+              <td class="stock">'hdfc'</td>
+              </tr>
+              <tr>
+              <td class="sno">18</td>
+              <td class="stock">'hdfcbank'</td>
+              </tr>
+              <tr>
+              <td class="sno">19</td>
+              <td class="stock">'heromotoco'</td>
+              </tr>
+              <tr>
+              <td class="sno">20</td>
+              <td class="stock">'hindalco'</td>
+              </tr>
+          </table>
+      </div>
+      <div class="column">
+          <table>
+              <tr>
+              <td class="sno">21</td>
+              <td class="stock">'hindunilvr'</td>
+              </tr>
+              <tr>
+              <td class="sno">22</td>
+              <td class="stock">'icicibank'</td>
+              </tr>
+              <tr>
+              <td class="sno">23</td>
+              <td class="stock">'indusindbk'</td>
+              </tr>
+              <tr>
+              <td class="sno">24</td>
+              <td class="stock">'infy'</td>
+              </tr>
+              <tr>
+              <td class="sno">25</td>
+              <td class="stock">'ioc'</td>
+              </tr>
+              <tr>
+              <td class="sno">26</td>
+              <td class="stock">'itc'</td>
+              </tr>
+              <tr>
+              <td class="sno">27</td>
+              <td class="stock">'jswsteel'</td>
+              </tr>
+              <tr>
+              <td class="sno">28</td>
+              <td class="stock">'kotakbank'</td>
+              </tr>
+              <tr>
+              <td class="sno">29</td>
+              <td class="stock">'lt'</td>
+              </tr>
+              <tr>
+              <td class="sno">30</td>
+              <td class="stock">'maruti'</td>
+              </tr>
+          </table>
+      </div>
+      <div class="column">
+          <table>
+              <tr>
+              <td class="sno">31</td>
+              <td class="stock">'mm'</td>
+              </tr>
+              <tr>
+              <td class="sno">32</td>
+              <td class="stock">'nestleind'</td>
+              </tr>
+              <tr>
+              <td class="sno">33</td>
+              <td class="stock">'nifty50_all'</td>
+              </tr>
+              <tr>
+              <td class="sno">34</td>
+              <td class="stock">'ntpc'</td>
+              </tr>
+              <tr>
+              <td class="sno">35</td>
+              <td class="stock">'ongc'</td>
+              </tr>
+              <tr>
+              <td class="sno">36</td>
+              <td class="stock">'powergrid'</td>
+              </tr>
+              <tr>
+              <td class="sno">37</td>
+              <td class="stock">'reliance'</td>
+              </tr>
+              <tr>
+              <td class="sno">38</td>
+              <td class="stock">'sbin'</td>
+              </tr>
+              <tr>
+              <td class="sno">39</td>
+              <td class="stock">'shreecem'</td>
+              </tr>
+              <tr>
+              <td class="sno">40</td>
+              <td class="stock">'sunpharma'</td>
+              </tr>
+          </table>
+      </div>
+      <div class="column">
+          <table>
+              <tr>
+              <td class="sno">41</td>
+              <td class="stock">'tatamotors'</td>
+              </tr>
+              <tr>
+              <td class="sno">42</td>
+              <td class="stock">'tatasteel'</td>
+              </tr>
+              <tr>
+              <td class="sno">43</td>
+              <td class="stock">'tcs'</td>
+              </tr>
+              <tr>
+              <td class="sno">44</td>
+              <td class="stock">'techm'</td>
+              </tr>
+              <tr>
+              <td class="sno">45</td>
+              <td class="stock">'titan'</td>
+              </tr>
+              <tr>
+              <td class="sno">46</td>
+              <td class="stock">'ultracemco'</td>
+              </tr>
+              <tr>
+              <td class="sno">47</td>
+              <td class="stock">'upl'</td>
+              </tr>
+              <tr>
+              <td class="sno">48</td>
+              <td class="stock">'vedl'</td>
+              </tr>
+              <tr>
+              <td class="sno">49</td>
+              <td class="stock">'wipro'</td>
+              </tr>
+              <tr>
+              <td class="sno">50</td>
+              <td class="stock">'zeel'</td>
+              </tr>
+          </table>
+      </div>
+  </div>
+
+</body>
+</html>

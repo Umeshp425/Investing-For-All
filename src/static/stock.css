@@ -1,0 +1,16 @@
+
+.center {
+    margin: 0;
+    position: absolute;
+    padding-top: 3%;
+    left: 45%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+  }
+.button{
+    background-color: #4CAF50;
+    color: black;
+    font-size: 24px;
+    padding: 10px 24px;
+  }
+

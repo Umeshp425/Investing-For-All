@@ -1,0 +1,52 @@
+<html>
+<head>
+    <title>Login/registration</title>
+    <link rel="stylesheet" href="../static/login.css">
+</head>
+<body>
+    <div align="center">
+        {{error}}
+    </div>
+    <div class="form">
+        <div class="button-box">
+            <div id="btn"></div>
+            <button type="button" class="toggle" onclick="login()">Login</button>
+            <button type="button" class="toggle" onclick="register()">Register</button>
+        </div>
+        <form id="login" action="/login" method="post" class="input">
+            <input type="text" class="field" placeholder="UserID" name="UserId" required>
+            <input type="text" class="field" placeholder="Password" name="Password" required>
+            <input type="checkbox" class="red"><span>Remember Password</span>
+            <button type="submit" class="submit">Login</button>
+        </form>
+        <form id="register" action="/signup" method="post" class="input">
+            <input type="text" class="field" placeholder="Full Name" name="name" required>
+            <input type="text" class="field" placeholder="UserID" name="UserId" required>
+            <input type="text" class="field" placeholder="Password" name="Password" required>
+            <input type="email" class="field" placeholder="Email" name="Email" required>
+            <button type="submit" class="submit">Register</button>
+        </form>
+    </div>
+    
+    <script>
+        var x = document.getElementById("login")
+        var y = document.getElementById("register")
+        var z = document.getElementById("btn")
+
+        function login(){
+            x.style.left= "50px";
+            y.style.left= "450px";
+            z.style.left= "0";
+        }
+
+        function register(){
+            x.style.left= "-400px";
+            y.style.left= "50px";
+            z.style.left= "110px";
+        }
+    </script>
+    
+
+
+</body>
+</html>

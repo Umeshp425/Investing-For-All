@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<head>
+  <html lang="en">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+      <nav class="w3-bar w3-border w3-green">
+        <a href="/" class="w3-bar-item w3-button">Home</a>
+        <a href="/profile" class="w3-bar-item w3-button">Profile</a>
+        {% if user.is_authenticated %}
+          <a href="logout" class="w3-bar-item w3-button w3-red w3-right">Logout</a>
+          <span class="w3-bar-item w3-right">Welcome, {{user.username}}</span>
+        {% else %}
+          <a href="login" class="w3-bar-item w3-button w3-red w3-right">Sign in</a>
+          <span class="w3-bar-item w3-right">Welcome, guest_user</span>
+        {% endif %}
+      </nav>
+        
+</head>
+<script type="text/javascript">
+  window.onload = function () {
+      var stockname={{stockname|tojson}};
+      var quantity={{quantity|tojson}};
+      var currentprice={{currentprice|tojson}};
+      document.getElementById('stock').innerHTML=stockname;
+      document.getElementById('quantity').innerHTML= quantity;
+      document.getElementById('price').innerHTML=currentprice;
+  }
+</script>
+<body>
+    <link rel="stylesheet" href="./../static/buy_sell.css">
+    <div align="center">
+      {{error}}
+    </div>
+
+    <div class="center">
+      <table>
+        <tr>
+          <th>Stock</th>
+          <th>Number of units owned</th>
+          <th>current price</th>
+        </tr>
+        <tr>
+          <td id="stock"></td>
+          <td id ="quantity"></td>
+          <td id ="price"></td>
+        </tr>
+      </table>
+    </div>
+    <div class="center2">
+      <div class="form">
+        <form action="/buy?id=1&stockname={{stockname}}", method="post">
+          <input type="number" placeholder="Quantity" name="search" required>
+          <a><button class="submit" type="submit" >BUY</button></a>
+          <a><button class="submit" type="submit" formaction="/buy?id=0&stockname={{stockname}}">SELL</button></a>
+        </form>
+          <!-- <a href="/add_to_watch_list" method="post"><button class="submit" type="submit">Add to Watchlist</button></a>                   -->
+        <!-- </span> -->
+      </div>
+    </div>
+</body>
+</html>

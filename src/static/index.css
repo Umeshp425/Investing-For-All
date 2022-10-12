@@ -1,0 +1,26 @@
+@import url(https://www.w3schools.com/w3css/4/w3.css);
+
+
+.topnav input[type=text] {
+    float: right;
+    padding: 6px;
+    border: none;
+    margin-top: 8px;
+    margin-right: 16px;
+    font-size: 17px;
+  }
+  
+
+.watchlist {
+    width: 40%;
+    padding-top: 15px;
+    margin: auto;
+    transform: translate(0, 20px);
+}
+
+.submit {
+    width: 8%;
+    display: block;
+    background: linear-gradient(to right, #ff105f, #ffad06);
+    margin: auto;
+}

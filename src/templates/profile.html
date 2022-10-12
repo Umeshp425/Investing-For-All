@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>profile</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../static/profile.css">
+<body>
+  <script>
+    var holdings = {{holdings|tojson}};
+    var historyData = {{historyData|tojson}};
+    var tempHistoryData = null;
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/1.3.1/chartjs-plugin-annotation.js"></script>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+  <div class="w3-top w3-bar w3-border w3-green">
+    <a href="/" class="w3-bar-item w3-button">Home</a>
+    <a href="searchStockes" class="w3-bar-item w3-button">Buy stokes</a>
+    {% if user.is_authenticated %}
+      <a href="/logout" class="w3-bar-item w3-button w3-red w3-right">Logout</a>
+      <span class="w3-bar-item w3-right">Welcome, {{user.username}}</span>
+    {% else %}
+      <a href="login" class="w3-bar-item w3-button w3-red w3-right">Sign in</a>
+      <span class="w3-bar-item w3-right">Welcome, guest_user</span>
+    {% endif %}
+  </div>
+
+  
+
+  <div class="row">
+
+    <div class="content">
+      <h1>Dashboard</h1>
+      <h2>1. Holdings</h2>
+      <div style="width:70%">
+        {% if currentValue[1] > 0 %}
+          <p class="w3-xlarge" style="text-indent:5%;">1.1 Value 
+            <span class="w3-text-green"  style="float:right">{{currentValue[0]}}<span class="w3-large">(+{{currentValue[1]}}%)</span></span>
+          </p>
+        {% else %}
+          <p class="w3-xlarge" style="text-indent:5%;">1.1 Value 
+            <span class="w3-text-orange"  style="float:right">{{currentValue[0]}}<span class="w3-large">({{currentValue[1]}}%)</span></span>
+          </p>
+        {% endif %}
+      </div>
+      
+      
+      <div style="width: 70%; padding-left:3.5%">
+        <p class="w3-xlarge">1.2 Distribution
+        <div class="tab" >
+          <button class="holdingsTabLinks" onclick="piechartOrTable(event, 'piechart')">Piechart</button>
+          <button class="holdingsTabLinks" onclick="piechartOrTable(event, 'table')">Table</button>
+        </div>
+        
+        <div id="piechart" class="holdingsTabContent" style="display: none; margin: 0 auto;"></div>
+        
+        <div id="table" class="holdingsTabContent">
+          <div class="scrollable">
+            <table class="w3-table w3-bordered">
+              <thead>
+                <tr class="w3-gray">
+                  <th>Sr. No.</th>
+                  <th>Symbol</th>
+                  <th>Units</th>
+                  <th>Price (per Unit)</th>
+                  <th>Value</th>
+                </tr>
+              </thead>
+            </table>
+          </div>
+          <div class="scrollable bodycontainer" style="max-height: 600px;">
+            <table class="w3-table w3-bordered w3-striped">
+              {% for i in range(holdings|length) %}
+                <tr>
+                  <td class="w3-center">{{i+1}}</td>
+                  <td class="w3-center">
+                    <a href="stock?stockname={{holdings[i][0]}}" class="w3-text-indigo">
+                      <div style="height:100%;width:100%">
+                        {{holdings[i][0]}}
+                      </div>
+                    </a>
+                  </td>
+                  <td class="w3-center">{{holdings[i][2]}}</td>
+                  <td class="w3-center">{{holdings[i][3]}}</td>
+                  <td class="w3-center">{{holdings[i][1]}}</td>
+                </tr>
+              {% endfor %}
+            </table>
+          </div> 
+        </div>
+        
+      </div>
+
+
+      <h2>2. History</h2>
+      <div style="width: 70%; padding-left:3.5%">
+        <p class="w3-xlarge">2.1 Historical Portfolio Value
+        <div class="tab" >
+          <button class="historyTabLinks" onclick="selectPeriod(event, '365')">1y</button>
+          <button class="historyTabLinks" onclick="selectPeriod(event, '182')">6m</button>
+          <button class="historyTabLinks" onclick="selectPeriod(event, '91')">3m</button>
+          <button class="historyTabLinks" onclick="selectPeriod(event, '30')">1m</button>
+          <button class="historyTabLinks" onclick="selectPeriod(event, '7')">1w</button>
+        </div>
+        
+        <canvas id="365" class="historyTabContent" style="display: none; margin: 0 auto;"></canvas>
+        <canvas id="182" class="historyTabContent" style="display: none; margin: 0 auto;"></canvas>
+        <canvas id="91" class="historyTabContent" style="display: none; margin: 0 auto;"></canvas>
+        <canvas id="30" class="historyTabContent" style="display: none; margin: 0 auto;"></canvas>
+        <canvas id="7" class="historyTabContent" style="display: none; margin: 0 auto;"></canvas>
+        
+      </div>
+      
+    </div>
+    <div class="watchlist w3-card-4">
+      <div class="scrollable">
+        <table class="w3-table w3-bordered">
+          <thead>
+            <tr class="w3-dark-gray">
+              <th colspan="2" class="w3-xlarge w3-center"><b style="text-shadow:1px 1px 0 #444">Watchlist</b></th>
+            </tr>
+            <tr class="w3-gray">
+              <th>Symbol</th>
+              <th class="w3-center">Close</th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+      <div class="scrollable bodycontainer">
+        <table class="w3-table w3-bordered w3-striped">
+          {% for watchlistEntry in watchlist %}
+            <tr>
+              <td>
+                <a href="stock?stockname={{watchlistEntry[0]}}" class="w3-text-indigo">
+                  <div style="height:100%;width:100%">
+                    {{watchlistEntry[0]}}
+                  </div>
+                </a>
+              </td>
+              {% if watchlistEntry[2] > 0 %}
+                <td class="w3-text-green w3-center">{{watchlistEntry[1]}}<span class="w3-tiny"> ({{watchlistEntry[2]}}%)</span></td>
+              {% else %}
+                <td class="w3-text-orange w3-center">{{watchlistEntry[1]}}<span class="w3-tiny">({{watchlistEntry[2]}}%)</span></td>
+              {% endif %}
+            </tr>
+          {% endfor %}
+        </table>
+      </div>
+      <div class="scrollable">
+        <table class="w3-table w3-bordered">
+          <thead>
+            <tr class="w3-light-gray">
+              <th colspan="2" class="w3-large w3-center">
+                <a href="searchStockes" style="text-decoration:none">
+                  <div style="height:100%;width:100%">
+                    <b>+</b>
+                  </div>
+                </a>
+              </th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+    </div>
+      
+    <script type="text/javascript" src="../static/tabs.js"></script>
+    <script type="text/javascript" src="../static/piechart.js"></script>
+    <script type="text/javascript" src="../static/historyTable.js"></script>
+  </div>
+  
+  
+  <!-- <script type="text/javascript">
+    // Load google charts
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+
+    // Draw the chart and set the chart values
+    function drawChart() {
+      var data = google.visualization.arrayToDataTable(chartData);
+      // Optional; add a title and set the width and height of the chart
+      var options = {'title':'My Average Day', 'width':600, 'height':600};
+
+      // Display the chart inside the <div> element with id="piechart"
+      var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+      chart.draw(data, options);
+    }
+
+    function resizeChart () {
+        chart.draw(data, options);
+    }
+    if (document.addEventListener) {
+        window.addEventListener('resize', resizeChart);
+    }
+    else if (document.attachEvent) {
+        window.attachEvent('onresize', resizeChart);
+    }
+    else {
+        window.resize = resizeChart;
+    }
+  </script> -->
+
+</body>
+</html>

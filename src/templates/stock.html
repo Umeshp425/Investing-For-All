@@ -1,0 +1,144 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <html lang="en">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+      <nav class="w3-bar w3-border w3-green">
+        <a href="/" class="w3-bar-item w3-button">Home</a>
+        <a href="profile" class="w3-bar-item w3-button">Profile</a>
+        {% if user.is_authenticated %}
+          <a href="logout" class="w3-bar-item w3-button w3-red w3-right">Logout</a>
+          <span class="w3-bar-item w3-right">Welcome, {{user.username}}</span>
+        {% else %}
+          <a href="login" class="w3-bar-item w3-button w3-red w3-right">Sign in/Register</a>
+          <span class="w3-bar-item w3-right">Welcome, guest_user</span>
+        {% endif %}
+      </nav>
+
+<script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.stock.min.js"></script>
+<script type="text/javascript">
+  
+window.onload = function () {
+  var dataPoints1=[],dataPoints2=[],dataPoints3=[];
+  var stockname={{stockname|tojson}};
+  var date={{date|tojson}};
+  var stockChart = new CanvasJS.StockChart("chartContainer",{
+    exportEnabled: true,
+    theme: "light2",
+    title:{
+      text:stockname,
+    },
+    charts: [{
+      toolTip: {
+        shared: true
+      },
+      axisX: {
+        lineThickness: 5,
+        tickLength: 0,
+        labelFormatter: function(e) {
+          return "";
+        },
+        crosshair: {
+          enabled: true,
+          snapToDataPoint: true,
+          labelFormatter: function(e) {
+            return ""
+          }
+        }
+      },
+      axisY2: {
+        title: stockname+" Price",
+        prefix: "₹"
+      },
+      legend: {
+        verticalAlign: "top",
+        horizontalAlign: "left"
+      },
+      data: [{
+        name: "Price (in Rs.)",
+        yValueFormatString: "₹#,###.##",
+        axisYType: "secondary",
+        type: "candlestick",
+        risingColor: "green",
+        fallingColor: "red",
+        dataPoints : dataPoints1
+      }]
+    },{
+      height: 100,
+      toolTip: {
+        shared: true
+      },
+      axisX: {
+        crosshair: {
+          enabled: true,
+          snapToDataPoint: true
+        }
+      },
+      axisY2: {
+        prefix: "₹",
+        title: "",
+      },
+      legend: {
+        horizontalAlign: "left"
+      },
+      data: [{
+        yValueFormatString: "₹#,###.##",
+        axisYType: "secondary",
+        name: stockname+"/RS.",
+        dataPoints : dataPoints2
+      }]
+    }],
+    navigator: {
+      data: [{
+        color: "grey",
+        dataPoints: dataPoints3
+      }],
+      slider: {
+        minimum: new Date(2018, 06, 01),
+        maximum: new Date(date)
+      }
+    }
+  });
+  var data={{data|tojson}};
+  for(var i = 0; i < data.length; i++){
+    dataPoints1.push({x: new Date(data[i][1]), y: [Number(data[i][5]), Number(data[i][6]), Number(data[i][7]), Number(data[i][9])], color: data[i][5] < data[i][9] ? "green" : "red"});;
+    dataPoints2.push({x: new Date(data[i][1]), y: 0, color: data[i][5] < data[i][9] ? "green" : "red"});
+    dataPoints3.push({x: new Date(data[i][1]), y: Number(data[i][9])});
+  }
+  var current={{current|tojson}};
+  var high52={{high52|tojson}};
+  var low52={{low52|tojson}};
+  document.getElementById('low').innerHTML="low: "+current[0][7];
+  document.getElementById('high').innerHTML="high: "+current[0][6];
+  document.getElementById('52w-high').innerHTML="52w-high: "+high52;
+  document.getElementById('52w-low').innerHTML="52w-low: "+low52;
+  stockChart.render();
+}
+
+
+</script>
+</head>
+<link rel="stylesheet" href="./../static/stock.css">
+<body >
+
+<div id="chartContainer" style="height: 500px; width: 100%;"></div>
+
+<h5 id="low" style ="text-align: center;width: 70%;padding-left: 15%;padding-top: 1%;"></h5>
+<h5 id="high" style ="text-align: center;width: 70%;padding-left: 15%;"></h5>
+<h5 id="52w-high" style ="text-align: center; width: 70%;padding-left: 15%;"></h5>
+<h5 id="52w-low" style ="text-align: center; width: 70%;padding-left: 15%;"></h5>
+<div class="center">
+  {% if user.is_authenticated %}
+    <form id="register" action="/signup" method="post" class="input"></form>
+    <a href="/buy?stockname={{stockname}}"><button class="button" type="button" >BUY!</button></a>
+    <a href="/add_to_watchList?stockname={{stockname}}"><button class="button" type="button">Add to Watchlist!</button></a>
+  {% else %}
+  <a href="login"><button class="button" type="button" >BUY!</button></a>
+  <a href="login"><button class="button" type="button">Add to Watchlist!</button></a>
+
+  {% endif %}
+</div>
+</body>
+</html>

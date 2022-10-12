@@ -1,0 +1,77 @@
+@import url(https://www.w3schools.com/w3css/4/w3.css);
+
+.row {
+    display: flex;
+    margin-left:-5px;
+    margin-right:-5px;
+}
+
+/* Left Contents */
+.content {
+    flex: 75%;
+    padding: 5%;
+}
+
+.tab {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+}
+
+.tab button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+    font-size: 17px;
+}
+
+.tab button:hover {
+    background-color: #ddd;
+}
+
+.tab button.active {
+    background-color: #ccc;
+}
+
+.holdingsTabContent {
+    display: none;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+}
+
+.historyTabContent {
+    display: none;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+    height: 500px;
+    width: 100%;
+}
+
+
+/* right contents */
+.watchlist {
+    width: 25%;
+    padding-top: 15px;
+    right: 5px;
+    transform: translate(0, 20px);
+    position: fixed;
+}
+
+.watchlistTable {
+    width: 100%;
+}
+
+.scrollable {
+    overflow-y: auto;
+}
+
+.bodycontainer {
+    max-height: 350px;
+    width: 100%;
+}
